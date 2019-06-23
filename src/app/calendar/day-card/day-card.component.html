@@ -1,0 +1,12 @@
+<div style="height:80px;">
+  <br>
+    <mat-card-header  dir="rtl">
+        <mat-card-subtitle style="color:black; font-weight: 500;"  *ngIf="day.sameMonth">{{day.mDate.date()}}</mat-card-subtitle>
+        <mat-card-subtitle  *ngIf="!day.sameMonth">{{day.mDate.date()}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content color="primary"> 
+          <p dir="rtl" *ngIf="day.eventCount!=0">
+              <span class="badge">{{day.eventCount}}</span>
+          </p>
+        </mat-card-content>
+</div>

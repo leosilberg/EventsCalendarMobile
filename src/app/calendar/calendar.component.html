@@ -1,0 +1,84 @@
+<div style="width:100%" align="center">
+
+  <button mat-icon-button (click)="nextMonth()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  {{ currentDate.format('YYYY') }} {{ currentDate.locale('he').format('MMMM') }}
+
+  <button mat-icon-button (click)="prevMonth()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+  <div style="float:right;height:0px;padding-right:18px">
+    <button mat-icon-button routerLink="/viewevents">
+      <mat-icon>calendar_view_day</mat-icon>
+    </button>
+  </div>
+</div>
+
+
+<table #dataTable mat-table [dataSource]="dataSource" color="primary" dir="rtl" style="width:100%; table-layout:fixed">
+  <!-- COLUMN INFO -->
+  <!--ID Col -->
+
+  <ng-container dir="rtl" matColumnDef="sunday" style="padding-right:0px">
+    <th mat-header-cell *matHeaderCellDef>יום ראשון</th>
+    <td mat-cell *matCellDef="let item" (click)="onDayClick(item.getDay(0))" (mouseenter)="hover(item.getDay(0),$event)"
+      (mouseleave)="leaveHover()">
+      <app-day-card [day]="item.getDay(0)"></app-day-card>
+    </td>
+  </ng-container>
+
+  <!--Name Col -->
+  <ng-container dir="rtl" matColumnDef="monday">
+    <th mat-header-cell *matHeaderCellDef>יום שני</th>
+    <td mat-cell *matCellDef="let item" (click)="onDayClick(item.getDay(1))" (mouseenter)="hover(item.getDay(1),$event)"
+      (mouseleave)="leaveHover()">
+      <app-day-card [day]="item.getDay(1)"></app-day-card>
+    </td>
+  </ng-container>
+
+  <ng-container dir="rtl" matColumnDef="tuesday">
+    <th mat-header-cell *matHeaderCellDef>יום שלישי</th>
+    <td mat-cell *matCellDef="let item" (click)="onDayClick(item.getDay(2))" (mouseenter)="hover(item.getDay(2),$event)"
+      (mouseleave)="leaveHover()">
+      <app-day-card [day]="item.getDay(2)"></app-day-card>
+    </td>
+  </ng-container>
+
+  <ng-container dir="rtl" matColumnDef="wednesday">
+    <th mat-header-cell *matHeaderCellDef>יום רביעי</th>
+    <td mat-cell *matCellDef="let item" (click)="onDayClick(item.getDay(3))" (mouseenter)="hover(item.getDay(3),$event)"
+      (mouseleave)="leaveHover()">
+      <app-day-card [day]="item.getDay(3)"></app-day-card>
+    </td>
+  </ng-container>
+
+  <ng-container dir="rtl" matColumnDef="thursday">
+    <th mat-header-cell *matHeaderCellDef>יום חמישי</th>
+    <td mat-cell *matCellDef="let item" (click)="onDayClick(item.getDay(4))" (mouseenter)="hover(item.getDay(4),$event)"
+      (mouseleave)="leaveHover()">
+      <app-day-card [day]="item.getDay(4)"></app-day-card>
+    </td>
+  </ng-container>
+
+  <ng-container dir="rtl" matColumnDef="friday">
+    <th mat-header-cell *matHeaderCellDef>יום שישי</th>
+    <td mat-cell *matCellDef="let item" (click)="onDayClick(item.getDay(5))" (mouseenter)="hover(item.getDay(5),$event)"
+      (mouseleave)="leaveHover()">
+      <app-day-card [day]="item.getDay(5)"></app-day-card>
+    </td>
+  </ng-container>
+
+  <ng-container dir="rtl" matColumnDef="saturday">
+    <th mat-header-cell *matHeaderCellDef>יום שבת</th>
+    <td mat-cell *matCellDef="let item" (click)="onDayClick(item.getDay(6))" (mouseenter)="hover(item.getDay(6),$event)"
+      (mouseleave)="leaveHover()">
+      <app-day-card [day]="item.getDay(6)"></app-day-card>
+    </td>
+  </ng-container>
+
+  <!-- ROW Info-->
+  <tr mat-header-row dir="rtl" *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row dir="rtl" *matRowDef="let rowData; columns: columnsToDisplay;"></tr>
+</table>

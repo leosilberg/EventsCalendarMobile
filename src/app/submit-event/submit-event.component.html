@@ -1,0 +1,86 @@
+<div mat-dialog-content dir="rtl" style="width:auto;">
+
+  <button mat-icon-button (click)="singleFile.click()">
+    <mat-icon class="icon">add_photo_alternate</mat-icon>
+  </button>
+
+  <input #singleFile type="file" [hidden]="true" accept="image/png, image/jpeg" (change)="onFileSelected($event)" />
+
+  <br>
+
+  <img style="width: 250px;height:200px;border-style: groove;border-width: 1px; vertical-align: middle;" [src]="image"
+    *ngIf="image">
+  <img style="width: 250px;height:200px;border-style: groove;border-width: 1px; vertical-align: middle;" *ngIf="!image">
+
+  <br>
+  <mat-form-field>
+    <input matInput style="direction: rtl;text-align: right" placeholder="שם האירוע" [(ngModel)]="title">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="מקום" style="direction: rtl;text-align: right" [(ngModel)]="location">
+  </mat-form-field>
+<br>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="תאריך" (dateChange)="dateChange($event)" disabled>
+    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker disabled="false"></mat-datepicker>
+
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="שעת התחלה" (click)="timeChange($event)" [(ngModel)]="time" disabled />
+    <button mat-icon-button matPrefix>
+      <mat-icon (click)="timeChange($event)">access_time</mat-icon>
+    </button>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="שעת סיום" (click)="endtimeChange($event)" [(ngModel)]="endtime" disabled />
+    <button mat-icon-button matPrefix>
+      <mat-icon (click)="endtimeChange($event)">access_time</mat-icon>
+    </button>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="7" placeholder="תיאור"
+      [(ngModel)]="description" style="direction: rtl;text-align: right;"></textarea>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-chip-list #chipList style="direction: rtl;text-align: right">
+      <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="remove(tag)">
+        <mat-icon matChipRemove *ngIf="true">cancel</mat-icon> {{tag}}
+
+      </mat-chip>
+      <input placeholder="תגים" style="direction: rtl;text-align: right" [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+  </mat-form-field>
+
+  <mat-form-field>
+  <mat-label>חוזרים</mat-label>
+  <mat-select [(ngModel)]="recurring">
+    <mat-option value="once" >
+      פעם אחת
+    </mat-option>
+    <mat-option value="daily" >
+      יומי
+    </mat-option>
+    <mat-option value="weekly" >
+      שבועי
+    </mat-option>
+    <mat-option value="monthly" >
+      חודשי
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-stroked-button (click)="onOKClick()" cdkFocusInitial>אישור</button>
+  <button mat-button (click)="onCancelClick()">בטל</button>
+
+  <span style="color:red;direction: rtl">{{errormessage}}</span>
+</div>

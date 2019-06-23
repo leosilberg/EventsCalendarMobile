@@ -1,0 +1,14 @@
+.row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+  }
+  .icon {
+    color: gray;
+}
+.mat-dialog-content{
+  padding-left: 5px!important;
+}
+  ::ng-deep .mat-snack-bar-container.snackbar { background-color:white;color: black; width: fit-content!important ; }

@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+  <div style="color:black;float: left;">
+
+    <button mat-icon-button *ngIf="!facebookUser" (click)="login()">
+      <mat-icon matPrefix>person</mat-icon>
+
+    </button>
+
+    <button mat-icon-button *ngIf="facebookUser" [matMenuTriggerFor]="menu">
+      <img style="height:25px; border-radius: 25px;" [src]="facebookUser.image">
+
+    </button>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item style="text-align:right" (click)="signOut()">להתנתק</button>
+    </mat-menu>
+
+  </div>
+
+
+  <span style="display:inline-block;margin:0 auto;">הרשת: באר שבע</span>
+
+
+  <div style="float:right">
+
+    <button mat-stroked-button (click)="onClickSubmitEvent()">שלח אירוע</button>
+
+  </div>
+
+
+
+</mat-toolbar>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,134 @@
+<div style="width: 100%;height: 40px; text-align:center; ">
+  <div style="float:left;height:0px;padding-left:18px">
+
+    <button mat-icon-button (click)="searchBar=true" *ngIf="!searchBar">
+      <mat-icon matPrefix>search</mat-icon>
+    </button>
+    <button mat-icon-button (click)="searchBar=false;search='';searchString();" *ngIf="searchBar">
+      <mat-icon matPrefix>close</mat-icon>
+    </button>
+
+  </div>
+  <div style="float:right;height:0px;padding-right:18px">
+    <button mat-icon-button routerLink="/calendar">
+      <mat-icon>calendar_today</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="searchBar" fxLayout="row" style="width:55%;margin-left:60px;position: relative; bottom:10px">
+    <mat-form-field style="width:100%;">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+
+      <input style="direction: rtl;text-align: right;" matInput type="search" [(ngModel)]="search"
+        (ngModelChange)="searchString()" [matAutocomplete]="auto" selected>
+    </mat-form-field>
+
+  </div>
+
+  <div *ngIf="!searchBar">
+
+    <div style="display: inline-block;" *ngIf="!selectedDate && !searchTags">
+
+      <button mat-icon-button (click)="nextMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      {{ currentDate.format('YYYY') }} {{ currentDate.locale('he').format('MMMM') }}
+
+      <button mat-icon-button (click)="prevMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+
+    <div style="display: inline-block;" *ngIf="selectedDate && !searchTags">
+
+
+      <button mat-icon-button (click)="nextDay()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <span style="direction: rtl;" dir="rtl">
+        {{ selectedDate.locale('he').format('D MMMM YYYY') }}
+      </span>
+
+      <button mat-icon-button (click)="prevDay()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div style="width:100%" align="center" *ngIf="eventsArray.length==0">
+  <br>
+  <span>אין אירועים</span>
+</div>
+
+<!-- <mat-accordion class="example-headers-align"> -->
+<!-- <mat-expansion-panel *ngFor="let event of eventsArray" hideToggle disabled collapsed> -->
+<!-- <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'"> -->
+
+<mat-card style="direction: rtl;margin: 20px" *ngFor="let event of eventsArray">
+  <div fxLayout="column">
+    <img mat-card-image style="height:200px;" [src]="event.image">
+
+    <mat-card-title> {{event.title }}<mat-icon
+        style="color:#2196f3;display: inline-block; position:relative; top:5px;padding-right: 2px"
+        *ngIf="event.attending">done</mat-icon>
+    </mat-card-title>
+    <span fxFlex="3"></span>
+    <mat-card-subtitle style="color:black; font-weight: 500;">{{event.host}} </mat-card-subtitle>
+    <span fxFlex="3"></span>
+    <mat-card-subtitle>{{event.date}} {{event.time}} - {{event.endtime}}</mat-card-subtitle>
+    <span fxFlex="3"></span>
+    <mat-card-subtitle>{{event.location}}</mat-card-subtitle>
+    <span fxFlex="3"></span>
+    <div>
+      <mat-card-subtitle style="display: inline-block;">{{event.numAttending}}</mat-card-subtitle>
+      <span fxFlex="1"></span>
+      <mat-icon style="display: inline-block; position:relative; bottom:5px" matSuffix>people</mat-icon>
+    </div>
+
+    <span fxFlex="3"></span>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let tag of event.tags" [selectable]="false" [removable]="false">
+        {{tag}}
+      </mat-chip>
+    </mat-chip-list>
+    <span fxFlex="5"></span>
+    <div class="mat-elevation-z">
+      <button mat-icon-button align="left" *ngIf="show!=event" (click)="show=event">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <button mat-icon-button align="left" *ngIf="show==event" (click)="show=null">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+      </button>
+
+    </div>
+    <mat-card-content *ngIf="event==show" style="white-space: pre-wrap;">{{event.description}}</mat-card-content>
+    <span fxFlex="5"></span>
+    <div fxLayout="row">
+      <button mat-raised-button style="color:#2196f3;" *ngIf="!event.attending" (click)="attendEvent(event)">
+        השתתף</button>
+      <button mat-raised-button *ngIf="event.attending" (click)="leaveEvent(event)">עזוב</button>
+      <span fxFlex="3"></span>
+      <button mat-icon-button (click)="shareEvent(event)">
+        <mat-icon style="color: rgb(59,89,152)">
+          share</mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+</mat-card>
+
+<!-- </mat-expansion-panel-header> -->
+<!-- </mat-expansion-panel> -->
+
+<!-- </mat-accordion> -->
